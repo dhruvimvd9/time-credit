@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Credit Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-menu">
+            <ul class="nav-list">
+                <li><a class="nav-links" href="index.html">Home</a></li>
+                <li><a class="nav-links" href="tasks.html">Tasks</a></li>
+                <li><a class="nav-links" href="#">Chat</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <p class="credit-status">My Balance: <span id="credits">0</span>
+            <t>credits
+        </p>
+        <div class="container">
+            <h2>Create a task request</h2>
+            <input type="text" class="textInput" id="taskRequestInput" placeholder="Enter a task">
+            <button>Create Task</button>
+            <div class="pending-tasks">
+                <ul>
+
+                </ul>
+            </div>
+        </div>
+    </main>
+    <script href="script.js"></script>
+</body>
+
+</html>

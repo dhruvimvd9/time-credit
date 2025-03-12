@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.5rem;
+    background: whitesmoke;
+}
+
+/* navbar */
+
+.nav-list {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background: #717171;
+    width: 100%;
+    height: 60px;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+}
+
+ul {
+    list-style: none;
+    padding-right: 0.5rem;
+}
+
+.nav-list li {
+    margin: 0 0.5rem;
+}
+
+.nav-links {
+    text-decoration: none;
+    color: white;
+}
+
+.nav-list a:hover,
+a:focus {
+    opacity: 0.5;
+}
+
+/* Dashboard */
+
+main {
+    width: 100%;
+}
+
+.container {
+    width: 70%;
+    margin: 2em auto;
+}
+
+.credit-status {
+    margin-bottom: 3em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: right;
+    padding: 1em 0;
+    color: #717171;
+}
+
+.container h2 {
+    margin-bottom: 0.8em;
+    font-weight: 400;
+    color: #717171;
+}
+
+.textInput {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.container button {
+    position: inherit;
+    padding: 0.5em;
+    color: #717171;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 0.8rem;
+}
+
+.container button:hover {
+    background: #717171;
+    color: white;
+}
