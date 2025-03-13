@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -11,6 +12,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/time-credit-platform",)
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 //connect API
 const userRoutes = require("./Routes/userRoutes");
@@ -19,10 +21,7 @@ app.use("/users", userRoutes);
 const taskRoutes = require("./Routes/taskRoutes");
 app.use("/tasks", taskRoutes);
 
-app.use(express.json());
-app.use(cors());
-
-const PORT = 7000;
+const PORT = process.env.PORT || 7000;
 
 app.use(express.static(path.join(__dirname, "..", "Frontend")));
 

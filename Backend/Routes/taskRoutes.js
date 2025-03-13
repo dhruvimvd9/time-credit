@@ -1,10 +1,12 @@
 const express = require("express");
 const Task = require("../Models/tasks");
 const User = require("../Models/user");
+const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
+require("dotenv").config();
 
 //create a task
-router.post("/create", async (req, res) => {
+router.post("/create", authMiddleware, async (req, res) => {
     try {
         const { description, createdBy, category, credits } = req.body;
         const task = new Task({ description, createdBy, category, credits });
@@ -42,6 +44,15 @@ router.post("/complete/:id", async (req, res) => {
             creatorCredits: taskCreator.credits,
             competerCredits: taskCompleter.credits
         });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.get("/", async (req, res) => {
+    try {
+        const tasks = await Task.find();
+        res.json(tasks);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
