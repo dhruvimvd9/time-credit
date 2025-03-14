@@ -1,8 +1,10 @@
 const express = require("express");
 const User = require("../Models/user");
+const Task = require("../Models/tasks");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/authMiddleware");
 require("dotenv").config();
 
 //signup
@@ -38,4 +40,20 @@ router.post("/login", async (req, res) => {
     }
 });
 
+router.post("/rate", authMiddleware, async (req, res) => {
+    try {
+        const { taskId, rating } = req.body;
+        const task = await Task.findById(taskId);
+
+        if (!task) return res.status(404).json({ message: "Task not found" });
+        if (!task.completed) return res.status(400).json({ message: "Task must be completed to rate" });
+
+        task.rating = rating;
+        await task.save();
+
+        res.json({ message: "Rating submitted successfully", task });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 module.exports = router;

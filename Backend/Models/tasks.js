@@ -4,9 +4,11 @@ const TaskSchema = new mongoose.Schema({
     description: String,
     createdBy: String,
     category: String,
-    assignedTo: String,
+    completedBy: String,
     completed: { type: Boolean, default: false },
-    credits: Number
+    creatorRating: { type: Number, min: 1, max: 5 },
+    completerRating: { type: Number, min: 1, max: 5 },
+    credits: { type: Number, default: "1" }
 });
 
 module.exports = mongoose.model("Tasks", TaskSchema);

@@ -26,16 +26,18 @@
     <main>
         <div class="container">
             <h2>Complete a task</h2>
-            <select id="taskList">
+            <select id="taskFilter" onchange="filterTasks()">
                 <option value="all">All</option>
                 <option value="Coding Help">Coding Help</option>
                 <option value="Design Review">Design Review</option>
                 <option value="Resume Feedback">Resume Feedback</option>
             </select>
             <button>Complete Task</button>
+
+            <div id="taskList"></div>
         </div>
     </main>
-    <script href="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

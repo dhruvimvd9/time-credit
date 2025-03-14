@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt");
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    credits: { type: Number, default: 0 }
+    credits: { type: Number, default: 0 },
+    ratings: { type: Number, min: 1, max: 5 }
 });
 
 //hash password

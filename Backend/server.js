@@ -15,20 +15,28 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //connect API
+
+app.use(express.static(path.join(__dirname, "..", "Frontend")));
+
 const userRoutes = require("./Routes/userRoutes");
 app.use("/users", userRoutes);
 
 const taskRoutes = require("./Routes/taskRoutes");
 app.use("/tasks", taskRoutes);
 
-const PORT = process.env.PORT || 7000;
-
-app.use(express.static(path.join(__dirname, "..", "Frontend")));
-
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "Frontend", "index.html"));
 });
 
+app.get("/tasks.html", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "Frontend", "tasks.html"));
+});
+
+app.get("/signup.html", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "Frontend", "signup.html"));
+});
+
+const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

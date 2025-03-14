@@ -28,17 +28,18 @@
             <t>credits
         </p>
         <div class="container">
-            <h2>Create a task request</h2>
-            <input type="text" class="textInput" id="taskRequestInput" placeholder="Enter a task">
-            <button>Create Task</button>
-            <div class="pending-tasks">
-                <ul>
+            <input type="text" class="textInput" id="taskRequestInput" placeholder="Enter a task" required>
 
-                </ul>
-            </div>
+            <select id="taskCategory">
+                <option value="Coding Help">Coding Help</option>
+                <option value="Design Review">Design Review</option>
+                <option value="Resume Feedback">Resume Feedback</option>
+            </select>
+
+            <button onclick="createTask()">Create Task</button>
         </div>
     </main>
-    <script href="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
