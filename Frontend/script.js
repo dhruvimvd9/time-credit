@@ -1,19 +1,49 @@
-document.getElementById("taskFilter").addEventListener("change", filterTasks);
+document.addEventListener("DOMContentLoaded", function () {
+
+});
+fetchUserCredits();
+async function fetchUserCredits() {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+        const response = await fetch("http://localhost:7000/users/me", {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            localStorage.setItem("userCredits", data.credits);
+
+            const creditElement = document.getElementById("userCredits");
+            if (creditElement) {
+                creditElement.textContent = ` ${data.credits}`;
+            } else {
+                console.error("Element #userCredits not found in the DOM.");
+            }
+        } else {
+            console.error("Failed to fetch user credits:", data.message);
+        }
+    } catch (error) {
+        console.error("Error fetching user credits:", error);
+    }
+}
 
 
-//filter tasks
+const taskFilter = document.getElementById("taskFilter");
 
 async function filterTasks() {
     const filterValue = document.getElementById("taskFilter").value;
     console.log("Fetching tasks from API...");
 
-    const token = localStorage.getItem("token"); // Get token from localStorage
+    const token = localStorage.getItem("token");
 
     try {
         let response = await fetch("http://localhost:7000/tasks", {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${token}`, // Send token
+                "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
         });
@@ -25,10 +55,8 @@ async function filterTasks() {
         let tasks = await response.json();
         console.log("Tasks received:", tasks);
 
-        // Apply filtering
         if (filterValue !== "all") {
-            tasks = tasks.filter(task => task.category === filterValue
-            );
+            tasks = tasks.filter(task => task.category === filterValue);
         }
 
         displayTasks(tasks);
@@ -39,7 +67,8 @@ async function filterTasks() {
 
 function displayTasks(tasks) {
     const taskList = document.getElementById("taskList");
-    taskList.innerHTML = ""; // Clear previous tasks
+    const loggedInUserId = localStorage.getItem("userId");
+    taskList.innerHTML = "";
 
     if (tasks.length === 0) {
         taskList.innerHTML = "<p>No tasks found.</p>";
@@ -49,10 +78,11 @@ function displayTasks(tasks) {
     tasks.forEach(task => {
         const taskElement = document.createElement("div");
         taskElement.id = `task-${task._id}`;
-        taskElement.innerHTML = `<p>${task.description} - ${task.completed ? "Completed" : "Pending"}</p>
-         ${!task.completed ? `<button onclick="completeTask('${task._id}')">Complete Task</button>` : ""}
-         ${task.completed && task.completedBy === loggedInUserId ? `<button onclick="openRatingModal('${task._id}')">Rate User</button>` : ""}
-         `;
+        taskElement.innerHTML = `
+                <p>${task.description}</p>
+                ${!task.completed ? `<button onclick="completeTask('${task._id}')">Complete Task</button>` : ""}
+                ${task.completed && task.completedBy === loggedInUserId ? `<button onclick="openRatingModal('${task._id}')">Rate User</button>` : ""}
+            `;
         taskList.appendChild(taskElement);
     });
 }
@@ -94,9 +124,9 @@ async function createTask() {
     }
 }
 
-
 async function completeTask(taskId) {
-    const token = localStorage.getItem("token"); // Get user token
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
     if (!token) {
         alert("You need to log in first.");
@@ -108,15 +138,16 @@ async function completeTask(taskId) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}` // Send token for authentication
+                "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({ userId: "userId_here" }) // Replace with actual user ID
+            body: JSON.stringify({ userId })
         });
 
         const result = await response.json();
         if (response.ok) {
             alert("Task marked as completed!");
-            filterTasks(); // Refresh the task list
+            fetchUserCredits();
+            filterTasks();
         } else {
             alert(result.message);
         }
@@ -127,13 +158,10 @@ async function completeTask(taskId) {
 
 function openRatingModal(taskId) {
     const taskElement = document.getElementById(`task-${taskId}`);
-
     if (!taskElement) return;
 
-    // Check if rating input already exists
     if (taskElement.querySelector(".rating-input")) return;
 
-    // Create input field and submit button
     const ratingInput = document.createElement("input");
     ratingInput.type = "number";
     ratingInput.min = "1";
@@ -170,7 +198,7 @@ async function submitRating(taskId, rating) {
         const data = await response.json();
         if (response.ok) {
             alert("Rating submitted successfully!");
-            location.reload(); // Refresh to reflect rating
+            location.reload();
         } else {
             alert(data.message);
         }
@@ -178,3 +206,7 @@ async function submitRating(taskId, rating) {
         console.error("Error submitting rating:", error);
     }
 }
+
+
+
+
